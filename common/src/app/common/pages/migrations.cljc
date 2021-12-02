@@ -268,3 +268,18 @@
             (update page :objects #(d/mapm (partial update-object %) %)))]
 
     (update data :pages-index #(d/mapm update-page %))))
+
+
+(defmethod migrate 12
+  [data]
+  (letfn [(update-saved-grids [grids]
+            (d/mapm (fn [_key value]
+                      (cond-> value
+                        (= :auto (:size value))
+                        (assoc :size nil)))
+                    grids))
+
+          (update-page [_ page]
+            (d/update-in-when page [:options :saved-grids] update-saved-grids))]
+
+    (update data :pages-index #(d/mapm update-page %))))
