@@ -46,13 +46,14 @@
 (defn get-root-shape
   "Get the root shape linked to a component for this shape, if any"
   [shape objects]
-  (if-not (:shape-ref shape)
-    nil
-    (if (:component-root? shape)
-      shape
-      (if-let [parent-id (:parent-id shape)]
-        (get-root-shape (get objects parent-id) objects)
-        nil))))
+
+  (cond
+    (some? (:component-root? shape))
+    shape
+
+    (some? (:shape-ref shape))
+    (recur (get objects (:parent-id shape))
+           objects)))
 
 (defn make-container
   [page-or-component type]
@@ -261,20 +262,11 @@
 
 (defn select-frames
   [objects]
-  (let [root   (get objects uuid/zero)
-        loopfn (fn loopfn [ids]
-                 (let [id (first ids)
-                       obj (get objects id)]
-                   (cond
-                     (or (nil? id) (nil? obj))
-                     nil
 
-                     (= :frame (:type obj))
-                     (lazy-seq (cons obj (loopfn (rest ids))))
-
-                     :else
-                     (lazy-seq (loopfn (rest ids))))))]
-    (loopfn (:shapes root))))
+  (into []
+        (comp (map (d/getf objects))
+              (filter #(= :frame (:type %))))
+        (get-in objects [uuid/zero :shapes])))
 
 (defn clone-object
   "Gets a copy of the object and all its children, with new ids
