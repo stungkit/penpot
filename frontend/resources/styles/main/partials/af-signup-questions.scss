@@ -201,7 +201,8 @@
     background-image: url("../images/form/never-used.png");
   }
 
-  .af-field-previous_design_tool .af-choice-option:nth-child(7) label {
+  .af-field-previous_design_tool .af-choice-option:nth-child(7) label,
+  .af-field-use_of_penpot .af-choice-option:nth-child(5) label {
     justify-content: flex-start;
     min-height: auto;
     padding-left: 1.4rem;
@@ -236,10 +237,19 @@
     }
   }
 
-  .af-field-previous_design_tool .af-choice-option:nth-child(7) input:checked+label {
+  .af-field-use_of_penpot .af-choice-option:nth-child(5) label {
+    &::before {
+      border-radius: 3px;
+    }
+  }
+
+  .af-field-previous_design_tool .af-choice-option:nth-child(7) input:checked+label,
+  .af-field-use_of_penpot .af-choice-option:nth-child(5) input:checked+label {
+
     &::before {
       background-color: $color-primary;
     }
+
     &::after {
       opacity: 1;
     }
