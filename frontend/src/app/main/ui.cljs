@@ -11,6 +11,7 @@
    [app.main.ui.context :as ctx]
    [app.main.ui.debug.icons-preview :refer [icons-preview]]
    [app.main.ui.error-boundary :refer [error-boundary*]]
+   [app.main.ui.exports.files]
    [app.main.ui.frame-preview :as frame-preview]
    [app.main.ui.icons :as i]
    [app.main.ui.notifications :as notifications]
@@ -105,7 +106,7 @@
         :dashboard-team-webhooks
         :dashboard-team-settings)
        [:?
-        #_[:& app.main.ui.releases/release-notes-modal {:version "1.19"}]
+        #_[:& app.main.ui.releases/release-notes-modal {:version "2.3"}]
         #_[:& app.main.ui.onboarding/onboarding-templates-modal]
         #_[:& app.main.ui.onboarding/onboarding-modal]
         #_[:& app.main.ui.onboarding.team-choice/onboarding-team-modal]
